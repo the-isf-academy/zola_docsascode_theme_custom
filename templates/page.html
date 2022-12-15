@@ -4,6 +4,7 @@
 
 {% block nav %}
   <ul id="breadcrumbs">
+
     {% for parent in page.ancestors %}
       {% set s = get_section(path=parent, include_pages=false) %}
       <li><a href="{{s.permalink}}">{{s.title}}</a>&nbsp;&#8594;&nbsp;</li> 
@@ -14,6 +15,7 @@
 
 {% block content %}
   <div id="taxonomies">
+    
     {% if page.date %}
       <date>{{ page.date | date(format="%d.%m.%Y") }}</date>
     {% endif %}   
@@ -35,34 +37,54 @@
     {% endif %}
   </div>
 
-  {% set_global header_count = 0 %}
-  {% for h2 in page.toc %}
-    {% set_global header_count = header_count + 1 %}
-    {% for h3 in h2.children %}
-      {% set_global header_count = header_count + 1 %}
-      {% for h4 in h3.children %}
-        {% set_global header_count = header_count + 1 %}
-      {% endfor %}
-    {% endfor %}
-  {% endfor %}
-
-  {% if header_count > 4 %}
-      <ul id="toc">
-        {% for h2 in page.toc %}
-          <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
-          {% if h2.children %}<ul>        
-            {% for h3 in h2.children %}
-            <li><a href="{{ h3.permalink | safe }}">{{ h3.title }}</a></li>
-          {% endfor %}
-         </ul>
-  {% endif %}
-        </li>
-  {% endfor %}
-      </ul>
-  {% endif %}
-
+  
   <article>
     {{ page.content | safe }}
   </article>
+
+  {% if page.toc %}
+  <div class="subnav_right">
+    <ul id="toc">
+      {% for h2 in page.toc %}
+        <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+          {% if h2.children %}
+          <ul>        
+            {% for h3 in h2.children %}
+            <li><a href="{{ h3.permalink | safe }}">{{ h3.title }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul> 
+  </div>
+      {% endif %}
 {% endblock content %}
 
+<!-- {% set_global header_count = 0 %}
+{% for h2 in page.toc %}
+  {% set_global header_count = header_count + 1 %}
+  {% for h3 in h2.children %}
+    {% set_global header_count = header_count + 1 %}
+    {% for h4 in h3.children %}
+      {% set_global header_count = header_count + 1 %}
+    {% endfor %}
+  {% endfor %}
+{% endfor %}
+
+{% if header_count > 4 %}
+
+    <ul id="toc">
+      {% for h2 in page.toc %}
+        <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+        {% if h2.children %}<ul>        
+          {% for h3 in h2.children %}
+          <li><a href="{{ h3.permalink | safe }}">{{ h3.title }}</a></li>
+        {% endfor %}
+       </ul>
+{% endif %}
+      </li>
+{% endfor %}
+    </ul>
+{% endif %}
+} -->

@@ -37,7 +37,8 @@ $theme-dark-bg-color:#262626;
 body {
   text-rendering: optimizeLegibility;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1.2rem;
+
   line-height:1.5;
   display: flex;
   flex-flow: row wrap;
@@ -113,16 +114,21 @@ h1 {
   font-size:2rem;
   line-height:1;
   font-weight: 700;
-  text-transform: uppercase;
   margin:1rem 0;
+  text-transform: capitalize;
 }
 
 nav {
-  width:34vw;
+  width:15vw;
+  height: 100%;
   max-width:40rem;
   padding:4vw;
   display: flex;
   flex-flow: column nowrap;
+
+  .logo{
+    padding-bottom: 2rem;
+  }
 
   #subnav {
     display: flex;
@@ -147,6 +153,10 @@ nav {
     @include color(color, --second-text-color, $theme-light-second-text-color);
   }
 
+  li{
+    padding-top: .5rem;
+  }
+
   em {
     font-size:1.625rem;
     line-height: 1.2;
@@ -160,6 +170,7 @@ main {
   display: flex;
   flex-flow: column nowrap;
   margin-top:2.375rem;
+  
 
   p {
     margin:0 0 1rem 0;
@@ -180,6 +191,13 @@ main {
   img {
     max-width:100%;
   }
+}
+
+.subnav_right{
+  max-width:40rem;
+  padding:4vw;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 #taxonomies {

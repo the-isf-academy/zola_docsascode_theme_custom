@@ -3,6 +3,7 @@
 {% block title %} {{ config.title }} | {{ section.title }} {% endblock title %}
 
 {% block nav %}
+
     <ul id="breadcrumbs">
         {% for parent in section.ancestors %}
             {% set s = get_section(path=parent, include_pages=false) %}

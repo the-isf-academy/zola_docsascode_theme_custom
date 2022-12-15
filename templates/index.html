@@ -6,34 +6,47 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta http-equiv="content-type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-      <title>{% block title %}{{ config.title }}{% endblock title %}</title>     
       <link rel="stylesheet" href="{{ get_url(path="main.css") | safe }}">
       <script type="text/javascript" src="{{ get_url(path='initialize-theme.js') | safe }}"></script>
     </head>
 
     <body>
       <nav>
-        <div id="subnav">
+        <a class="logo" href="{{ get_url(path='') }}"><img src="{{ get_url(path='') }}/images/fablearn.png"  width="100%"/></a>
+        <!-- <div id="subnav">
+         
           <form class="theme-selector">
             <button type="button" id="theme-light-button" class="theme-button" onclick="enableTheme('light', true)">&#9706;</button>
             <button type="button" id="theme-dark-button"  class="theme-button enabled" onclick="enableTheme('dark', true)">&#9705;</button>
           </form>
           <a href="/search">&#8981;</a>       
-        </div>
+        </div> -->
 
       {% block nav %}
+   
         <ul id="breadcrumbs">
           {% for tax in config.taxonomies %}
             <li>/<a href="/{{tax.name}}/">{{tax.name}}</a>&nbsp;</li> 
           {% endfor %}
         </ul>
-        <h1>{{ config.title }}</h1>  
+ 
           {{ macro::tree() }}
       {% endblock nav %}
+  
       </nav>
 
       <main>
       {% block content %}
+
+
+        <article>
+        {{ section.content | safe }}
+        </article>
+      {% endblock content %}
+      </main>
+
+      {% if section.toc %}
+      <div class="subnav_right">
 
         {% set_global header_count = 0 %}
         {% for h2 in section.toc %}
@@ -46,7 +59,7 @@
           {% endfor %}
         {% endfor %}
 
-        {% if header_count > 4 %}
+        {% if header_count > 2 %}
             <ul id="toc">
               {% for h2 in section.toc %}
                 <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
@@ -60,12 +73,10 @@
         {% endfor %}
             </ul>
         {% endif %}
-
-        <article>
-        {{ section.content | safe }}
-        </article>
-      {% endblock content %}
-      </main>
+        
+      </div>
+      {% endif %}
+      
 
       <script type="text/javascript" src="{{ get_url(path='update-theme-elements.js') | safe }}"></script>
 

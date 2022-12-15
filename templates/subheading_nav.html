@@ -1,0 +1,38 @@
+
+
+
+{% block content %}
+{% if section.toc %}
+      <div class="subnav_right">
+
+        {% set_global header_count = 0 %}
+        {% for h2 in section.toc %}
+          {% set_global header_count = header_count + 1 %}
+          {% for h3 in h2.children %}
+            {% set_global header_count = header_count + 1 %}
+            {% for h4 in h3.children %}
+              {% set_global header_count = header_count + 1 %}
+            {% endfor %}
+          {% endfor %}
+        {% endfor %}
+
+        {% if header_count > 2 %}
+            <ul id="toc">
+              {% for h2 in section.toc %}
+                <li><a href="{{ h2.permalink | safe }}">{{ h2.title }}</a>
+                {% if h2.children %}<ul>        
+                  {% for h3 in h2.children %}
+                  <li><a href="{{ h3.permalink | safe }}">{{ h3.title }}</a></li>
+                {% endfor %}
+              </ul>
+        {% endif %}
+              </li>
+        {% endfor %}
+            </ul>
+        {% endif %}
+        
+      </div>
+      {% endif %}
+
+
+{% endblock content %}
